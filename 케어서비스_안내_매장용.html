@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>모델별 케어 서비스 안내 — 매장용</title>
+<style>
+:root{
+  --bg:#eef1f5; --card:#fff; --ink:#131c27; --ink2:#4d5c6e; --ink3:#8695a7;
+  --line:#e2e7ee; --line2:#eef1f5;
+  --brand:#8b1f3f; --brand2:#a8385a; --brandsoft:#fdf2f5;
+  --warn:#fff8e8; --warnline:#f0dcae; --warnink:#8a6212;
+  --ok:#eef8f2; --okink:#0f7a56;
+  --shadow:0 1px 2px rgba(19,28,39,.05),0 6px 20px rgba(19,28,39,.06);
+  /* 주황 호버 액센트 */
+  --or:#ff7a1a; --or2:#ff9d4d; --or3:#e35f00;
+  --orsoft:#fff4ea; --orline:#ffd2ab; --orglow:rgba(255,122,26,.22);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
+  background:var(--bg);color:var(--ink);font-size:14px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow:hidden;
+}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ===== small screen guard ===== */
+#toosmall{display:none;position:fixed;inset:0;z-index:999;background:var(--bg);
+  align-items:center;justify-content:center;text-align:center;padding:40px}
+#toosmall div{max-width:420px}
+#toosmall h3{font-size:19px;font-weight:800;margin-bottom:10px}
+#toosmall p{color:var(--ink2);font-size:14px}
+@media (max-width:1099px){#toosmall{display:flex}}
+
+/* ===== layout ===== */
+.app{display:grid;grid-template-columns:236px 1fr;height:100vh}
+
+aside{background:linear-gradient(180deg,#5c1129 0%,#7a1a37 100%);color:#fff;display:flex;flex-direction:column;padding:20px 14px}
+aside .brand{padding:0 8px 18px;border-bottom:1px solid rgba(255,255,255,.14);margin-bottom:14px}
+aside .brand .k{font-size:10.5px;letter-spacing:.16em;font-weight:800;color:rgba(255,255,255,.6)}
+aside .brand .t{font-size:17px;font-weight:800;line-height:1.35;margin-top:5px}
+aside .lbl{font-size:10.5px;letter-spacing:.1em;font-weight:800;color:rgba(255,255,255,.45);padding:0 8px;margin:12px 0 7px}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nv{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;
+  font-size:13.5px;font-weight:600;color:rgba(255,255,255,.8);transition:.13s;text-align:left;width:100%}
+.nv:hover{background:rgba(255,255,255,.1);color:#fff}
+.nv.on{background:#fff;color:#7a1a37;font-weight:800}
+.nv .ic{width:18px;text-align:center;font-size:14px}
+.nv .kb{margin-left:auto;font-size:10px;font-weight:700;opacity:.5;border:1px solid currentColor;border-radius:4px;padding:0 4px}
+.nv.on .kb{opacity:.55}
+aside .foot{margin-top:auto;padding:12px 8px 0;border-top:1px solid rgba(255,255,255,.14);
+  font-size:11px;color:rgba(255,255,255,.5);line-height:1.6}
+
+.main{display:flex;flex-direction:column;min-width:0;background:var(--bg)}
+.topbar{background:#fff;border-bottom:1px solid var(--line);padding:12px 26px;display:flex;align-items:center;gap:14px;flex:0 0 auto}
+.topbar h1{font-size:16.5px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.topbar .sub{font-size:12px;color:var(--ink3);white-space:nowrap}
+.spacer{flex:1}
+.search{position:relative}
+.search input{
+  width:250px;padding:8px 12px 8px 32px;border:1px solid var(--line);border-radius:9px;
+  font-size:13px;font-family:inherit;background:#fbfcfd;outline:none;transition:.13s}
+.search input:focus{border-color:var(--brand2);background:#fff;box-shadow:0 0 0 3px rgba(168,56,90,.1)}
+.search .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:13px}
+.search .kb{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:10px;font-weight:700;
+  color:var(--ink3);border:1px solid var(--line);border-radius:4px;padding:1px 5px;background:#fff}
+.tgl{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--ink2);
+  border:1px solid var(--line);border-radius:9px;padding:7px 12px;background:#fff;transition:.13s;white-space:nowrap}
+.tgl:hover{border-color:#c8d2df}
+.tgl.on{background:var(--warn);border-color:var(--warnline);color:var(--warnink)}
+.tgl .dot{width:8px;height:8px;border-radius:50%;background:#cfd7e2}
+.tgl.on .dot{background:#d9a02c}
+.btn{font-size:12.5px;font-weight:700;color:var(--ink2);border:1px solid var(--line);border-radius:9px;
+  padding:7px 13px;background:#fff;transition:.13s;white-space:nowrap}
+.btn:hover{border-color:#c8d2df;color:var(--ink)}
+
+.scroll{overflow:auto;padding:22px 26px 40px;flex:1}
+.view{display:none}
+.view.on{display:block}
+
+/* ===== headings ===== */
+.vh{display:flex;align-items:flex-end;gap:12px;margin-bottom:4px;flex-wrap:wrap}
+.vh h2{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.vh .num{font-size:11.5px;font-weight:800;color:var(--brand);background:var(--brandsoft);
+  border:1px solid #f3dbe2;padding:3px 8px;border-radius:6px}
+.vsub{font-size:12.5px;color:var(--ink3);margin-bottom:16px}
+
+/* ===== KPI strip ===== */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;box-shadow:var(--shadow)}
+.kpi .n{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+.kpi .l{font-size:11.5px;color:var(--ink3);font-weight:600;margin-top:2px}
+
+/* ===== master table ===== */
+.tcard{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.tcard .cap{padding:12px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.cap .ct{font-size:13.5px;font-weight:800}
+.cap .lg{margin-left:auto;font-size:11px;color:var(--ink3);display:flex;gap:14px;align-items:center}
+.cap .lg i{font-style:normal;display:inline-block;width:9px;height:9px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+.cap .lg .w{background:var(--warn);border:1px solid var(--warnline)}
+.cap .lg .s{background:var(--ok);border:1px solid #cfe9dc}
+
+table{width:100%;border-collapse:collapse;table-layout:fixed}
+thead th{
+  position:sticky;top:0;z-index:5;background:#f7f9fc;font-size:11.5px;font-weight:800;color:var(--ink2);
+  text-align:left;padding:10px 12px;border-bottom:2px solid var(--line);letter-spacing:.02em;white-space:nowrap}
+td{padding:10px 12px;font-size:12.5px;vertical-align:top;border-bottom:1px solid var(--line2);line-height:1.5;word-break:keep-all}
+tbody tr:last-child td{border-bottom:none}
+td.model{background:#fbfcfe;font-weight:800;font-size:13px;border-right:1px solid var(--line);vertical-align:middle}
+td.model .em{font-size:16px;display:block;margin-bottom:3px}
+td.model .sm{display:block;font-size:10.5px;color:var(--ink3);font-weight:600;margin-top:2px}
+td.grade{font-weight:800;font-size:12.5px;white-space:nowrap;border-right:1px solid var(--line2)}
+td.grade .bar{display:inline-block;width:4px;height:13px;border-radius:2px;vertical-align:-2px;margin-right:6px}
+td.d{background:var(--warn)}
+td.none{color:#b8c2ce}
+tbody tr:hover td:not(.model){background:#f9fbfe}
+tbody tr:hover td.d{background:#fff3d9}
+tbody tr.mstart td{border-top:2px solid var(--line)}
+tbody tr.hide{display:none}
+mark{background:#ffe9a8;color:inherit;border-radius:3px;padding:0 2px}
+
+/* ===== model view ===== */
+.summary{background:#fff;border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:12px;
+  padding:14px 18px;margin-bottom:16px;box-shadow:var(--shadow)}
+.summary .st{font-size:12px;font-weight:800;color:var(--brand);letter-spacing:.03em;margin-bottom:8px}
+.summary ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:6px 22px}
+.summary li{font-size:12.5px;color:var(--ink2);position:relative;padding-left:13px}
+.summary li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:var(--brand2)}
+.summary li b{color:var(--ink)}
+.summary .allsame{font-size:12.5px;color:var(--okink);background:var(--ok);border-radius:8px;padding:9px 12px;font-weight:600}
+
+.cmp{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+.cmp table{table-layout:fixed}
+.cmp thead th{padding:12px 14px;font-size:13px;color:var(--ink);text-align:left;position:relative}
+.cmp thead th.g::after{content:"";position:absolute;left:14px;right:14px;bottom:-2px;height:3px;background:var(--gc);border-radius:2px}
+.cmp thead th .gsub{display:block;font-size:10.5px;font-weight:600;color:var(--ink3);margin-top:2px}
+.cmp tbody th{width:132px;text-align:left;padding:12px 14px;font-size:12.5px;font-weight:800;color:var(--ink2);
+  background:#fbfcfe;border-right:1px solid var(--line);border-bottom:1px solid var(--line2);vertical-align:top}
+.cmp tbody th .tag{display:block;font-size:10px;font-weight:800;border-radius:4px;padding:1px 5px;margin-top:5px;width:fit-content}
+.cmp tbody th .tag.d{background:#fdefd4;color:var(--warnink)}
+.cmp tbody th .tag.s{background:#e6f6ee;color:var(--okink)}
+.cmp td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid var(--line2)}
+.cmp tr.same td{color:var(--ink2)}
+.cmp tr.diff td{background:var(--warn)}
+.cmp tr.diff td.best{background:#fff3d9}
+.cmp td ul{list-style:none}
+.cmp td li{position:relative;padding-left:12px}
+.cmp td li+li{margin-top:3px}
+.cmp td li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%;background:#c5cfdb}
+.cmp tr.hide{display:none}
+.empty{padding:40px;text-align:center;color:var(--ink3);font-size:13px}
+
+/* ================= 주황 호버 인터랙션 ================= */
+.nv:hover{background:var(--or)!important;color:#fff!important;box-shadow:0 3px 12px var(--orglow)}
+.nv:hover .kb{opacity:.85;color:#fff}
+.nv.on:hover{background:var(--or)!important;color:#fff!important}
+.btn:hover,.tgl:hover{border-color:var(--or)!important;color:var(--or3)!important;background:var(--orsoft)!important}
+.tgl:hover .dot{background:var(--or)}
+.search input:hover{border-color:var(--orline)}
+.search input:focus{border-color:var(--or)!important;box-shadow:0 0 0 3px var(--orglow)!important}
+.kpi{transition:.14s}
+.kpi:hover{border-color:var(--or);background:var(--orsoft);transform:translateY(-2px);box-shadow:0 6px 18px var(--orglow)}
+.kpi:hover .n,.kpi:hover .l{color:var(--or3)}
+tbody tr:hover td:not(.model){background:var(--orsoft)!important}
+tbody tr:hover td.d{background:#ffe9d2!important}
+tbody tr:hover td.model{background:var(--orsoft)!important;color:var(--or3)}
+td.model{cursor:pointer;transition:.13s}
+td.model:hover{background:var(--or)!important;color:#fff!important}
+td.model:hover .sm{color:rgba(255,255,255,.8)}
+.cmp tbody tr:hover th{background:var(--orsoft);color:var(--or3)}
+.cmp thead th:hover{color:var(--or3)}
+.summary li:hover{color:var(--or3)}
+.summary li:hover::before{background:var(--or)}
+.summary li{transition:.12s;cursor:default}
+aside .brand:hover .t{color:var(--or2);transition:.15s}
+.cap .lg span:hover{color:var(--or3)}
+
+/* 커서 따라다니는 주황 링 */
+#ring{position:fixed;left:0;top:0;width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--or);pointer-events:none;z-index:9998;opacity:0;
+  transform:translate(-50%,-50%);transition:width .16s,height .16s,opacity .2s,background .16s;
+  mix-blend-mode:multiply}
+#ring.act{opacity:.9}
+#ring.big{width:44px;height:44px;background:var(--orglow)}
+
+/* ================= 케어 요정 케어핑 ================= */
+#fairy{position:fixed;right:26px;bottom:22px;z-index:900;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+#bubble{
+  max-width:250px;background:#fff;border:1px solid var(--line);border-radius:16px 16px 4px 16px;
+  padding:11px 14px;font-size:12.5px;line-height:1.55;color:var(--ink2);box-shadow:0 8px 26px rgba(19,28,39,.14);
+  opacity:0;transform:translateY(6px) scale(.96);transition:.22s;pointer-events:none;transform-origin:bottom right}
+#bubble.on{opacity:1;transform:none}
+#bubble b{color:var(--or3)}
+#bubble .nm{display:block;font-size:10.5px;font-weight:800;color:var(--or);letter-spacing:.05em;margin-bottom:3px}
+
+#fbtn{position:relative;width:96px;height:104px;background:none;filter:drop-shadow(0 8px 16px rgba(19,28,39,.18))}
+#fbtn svg{width:100%;height:100%;overflow:visible}
+.fl{animation:float 3.2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-9px) rotate(1.5deg)}}
+.wing{transform-origin:50px 58px;animation:flap .42s ease-in-out infinite alternate}
+.wing.r{transform-origin:50px 58px;animation-delay:.06s}
+@keyframes flap{from{transform:scaleX(1) rotate(0)}to{transform:scaleX(.68) rotate(-7deg)}}
+.eye{transform-origin:center;animation:blink 4.4s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.08)}}
+.spk{animation:twinkle 1.8s ease-in-out infinite}
+.spk2{animation:twinkle 1.8s ease-in-out .6s infinite}
+.spk3{animation:twinkle 1.8s ease-in-out 1.2s infinite}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+/* 색상 토큰 — 호버 시 주황으로 변신 */
+#fbtn .body{fill:url(#gBody);transition:.2s}
+#fbtn .wingp{fill:#bcd6ff;opacity:.72;transition:.2s}
+#fbtn .hat{fill:#7a3fd6;transition:.2s}
+#fbtn .cheek{fill:#ff9db5;transition:.2s}
+#fbtn .star{fill:#ffd54a;transition:.2s}
+#fbtn .wand{stroke:#c98a3c;transition:.2s}
+#fbtn:hover .body{fill:url(#gOr)}
+#fbtn:hover .wingp{fill:#ffc79a;opacity:.85}
+#fbtn:hover .hat{fill:var(--or3)}
+#fbtn:hover .cheek{fill:#ff6b2b}
+#fbtn:hover .star{fill:#ff7a1a}
+#fbtn:hover .wand{stroke:var(--or3)}
+#fbtn:hover{filter:drop-shadow(0 10px 22px var(--orglow)) drop-shadow(0 0 12px rgba(255,122,26,.45))}
+#fbtn:hover .fl{animation:float 1.1s ease-in-out infinite}
+#fbtn .ping{position:absolute;top:4px;right:6px;width:11px;height:11px;border-radius:50%;
+  background:var(--or);box-shadow:0 0 0 0 var(--orglow);animation:ping 1.9s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,122,26,.6)}70%{box-shadow:0 0 0 12px rgba(255,122,26,0)}100%{box-shadow:0 0 0 0 rgba(255,122,26,0)}}
+
+/* ===== 요정 패널 ===== */
+#panel{
+  position:fixed;right:26px;bottom:138px;width:430px;max-height:calc(100vh - 180px);z-index:901;
+  background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(19,28,39,.22);
+  display:none;flex-direction:column;overflow:hidden}
+#panel.on{display:flex}
+.ph{background:linear-gradient(135deg,#ff7a1a,#ff9d4d);color:#fff;padding:13px 16px;display:flex;align-items:center;gap:10px}
+.ph .pi{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center;font-size:15px}
+.ph .pt{font-size:14px;font-weight:800;line-height:1.3}
+.ph .pt small{display:block;font-size:10.5px;font-weight:600;opacity:.85}
+.ph .x{margin-left:auto;font-size:19px;opacity:.85;width:26px;height:26px;border-radius:8px;color:#fff}
+.ph .x:hover{background:rgba(255,255,255,.25);opacity:1}
+.pt-tabs{display:flex;border-bottom:1px solid var(--line);background:#fbfcfd;flex:0 0 auto}
+.pt-tab{flex:1;padding:10px 6px;font-size:12px;font-weight:700;color:var(--ink3);border-bottom:2px solid transparent;transition:.13s}
+.pt-tab:hover{color:var(--or3);background:var(--orsoft)}
+.pt-tab.on{color:var(--or3);border-bottom-color:var(--or);background:#fff}
+.pbody{padding:14px 16px 16px;overflow:auto;flex:1}
+.pane{display:none}.pane.on{display:block}
+.fld{margin-bottom:10px}
+.fld label{display:block;font-size:11px;font-weight:800;color:var(--ink3);margin-bottom:4px;letter-spacing:.03em}
+.fld select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:9px;font-family:inherit;
+  font-size:12.5px;background:#fbfcfd;outline:none;cursor:pointer;transition:.13s}
+.fld select:hover{border-color:var(--or);background:var(--orsoft)}
+.fld select:focus{border-color:var(--or);box-shadow:0 0 0 3px var(--orglow)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.out{background:#fbfcfd;border:1px solid var(--line);border-radius:11px;padding:12px;font-size:12.5px;line-height:1.6;color:var(--ink2)}
+.out .hd{font-size:11.5px;font-weight:800;color:var(--or3);margin-bottom:7px}
+.out .dl{padding:8px 10px;border-radius:8px;background:#fff;border:1px solid var(--line);margin-bottom:6px}
+.out .dl:last-child{margin-bottom:0}
+.out .dl .k{font-size:11.5px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.out .dl .r{display:flex;gap:7px;font-size:12px}
+.out .dl .r+.r{margin-top:2px}
+.out .dl .r .t{flex:0 0 auto;font-size:10px;font-weight:800;color:#fff;border-radius:4px;padding:1px 6px;margin-top:2px}
+.out .same{color:var(--okink);background:var(--ok);border:1px solid #cfe9dc;border-radius:9px;padding:9px 11px;font-weight:600}
+.script{white-space:pre-wrap;font-size:12.5px;line-height:1.7;background:#fff;border:1px dashed var(--orline);
+  border-radius:11px;padding:12px;color:var(--ink);max-height:230px;overflow:auto}
+.acts{display:flex;gap:7px;margin-top:9px}
+.pbtn{flex:1;padding:9px;border-radius:9px;font-size:12.5px;font-weight:800;border:1px solid var(--or);color:var(--or3);background:var(--orsoft);transition:.13s}
+.pbtn:hover{background:var(--or);color:#fff}
+.pbtn.g{border-color:var(--line);color:var(--ink2);background:#fff}
+.pbtn.g:hover{border-color:var(--or);background:var(--or);color:#fff}
+.segs{display:flex;gap:5px}
+.seg{flex:1;padding:8px 4px;border:1px solid var(--line);border-radius:9px;font-size:11.5px;font-weight:700;
+  color:var(--ink3);background:#fbfcfd;transition:.13s;white-space:nowrap}
+.seg:hover{border-color:var(--or);color:var(--or3);background:var(--orsoft)}
+.seg.on{border-color:var(--or);background:var(--or);color:#fff}
+.disc{margin-top:9px;font-size:10.5px;line-height:1.5;color:var(--ink3);background:#fbfcfd;
+  border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.disc b{color:var(--ink2)}
+/* quiz */
+.qz{font-size:13px;font-weight:800;line-height:1.5;margin-bottom:11px}
+.qz small{display:block;font-size:11px;font-weight:600;color:var(--or3);margin-bottom:4px}
+.opt{display:block;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--line);border-radius:10px;
+  font-size:12.5px;margin-bottom:7px;transition:.13s;color:var(--ink2);line-height:1.45}
+.opt:hover{border-color:var(--or);background:var(--orsoft);color:var(--or3)}
+.opt.ok{border-color:#37a06f;background:var(--ok);color:var(--okink);font-weight:700}
+.opt.no{border-color:#e08a8a;background:#fdf0f0;color:#b04747}
+.opt:disabled{cursor:default}
+.qres{font-size:12.5px;font-weight:700;padding:9px 11px;border-radius:9px;margin-bottom:9px}
+.qres.o{background:var(--ok);color:var(--okink)}
+.qres.x{background:#fdf0f0;color:#b04747}
+.score{font-size:11.5px;color:var(--ink3);font-weight:700;text-align:right;margin-bottom:9px}
+
+/* ===== print ===== */
+@media print{
+  @page{size:A4 landscape;margin:10mm}
+  body{overflow:visible;background:#fff;font-size:9pt}
+  aside,.topbar,#toosmall,#fairy,#panel,#ring{display:none!important}
+  .app{display:block;height:auto}
+  .scroll{overflow:visible;padding:0}
+  .tcard,.cmp,.summary,.kpi{box-shadow:none;border-color:#ccc;break-inside:auto}
+  thead th{position:static;background:#f2f2f2!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  td.d,.cmp tr.diff td{background:#fdf3dd!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tbody tr{break-inside:avoid}
+  .kpis{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="toosmall"><div>
+  <h3>PC 화면에서 확인해 주세요</h3>
+  <p>이 자료는 매장 PC(가로 1100px 이상) 전용으로 제작되었습니다. 브라우저 창을 넓히거나 데스크톱에서 열어 주세요.</p>
+</div></div>
+
+<div class="app">
+  <aside>
+    <div class="brand">
+      <div class="k">LG CARE SERVICE</div>
+      <div class="t">모델별<br>케어 서비스 안내</div>
+    </div>
+    <div class="lbl">전체</div>
+    <div class="nav" id="nav1"></div>
+    <div class="lbl">모델별 상세</div>
+    <div class="nav" id="nav2"></div>
+    <div class="foot">매장 응대용 내부 참고 자료<br>계약 조건·모델에 따라 상이할 수 있음</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <h1 id="ttl">전체 한눈에 보기</h1>
+      <span class="sub" id="tsub"></span>
+      <div class="spacer"></div>
+      <div class="search">
+        <span class="si">🔍</span>
+        <input id="q" type="text" placeholder="모델·등급·서비스 내용 검색" autocomplete="off">
+        <span class="kb">/</span>
+      </div>
+      <button class="tgl" id="dif"><span class="dot"></span>차이 항목만</button>
+      <button class="btn" id="prt">🖨 인쇄</button>
+    </div>
+    <div class="scroll" id="scroll"></div>
+  </div>
+</div>
+
+<div id="ring"></div>
+
+<!-- ===== 케어 요정 케어핑 ===== -->
+<div id="panel">
+  <div class="ph">
+    <div class="pi">🧚</div>
+    <div class="pt">케어핑 도우미<small>매장 응대를 도와드려요</small></div>
+    <button class="x" id="pclose">×</button>
+  </div>
+  <div class="pt-tabs">
+    <button class="pt-tab on" data-pane="0">⚖️ 등급 비교</button>
+    <button class="pt-tab" data-pane="1">💬 응대 멘트</button>
+    <button class="pt-tab" data-pane="2">🎯 교육 퀴즈</button>
+  </div>
+  <div class="pbody">
+    <div class="pane on" id="pane0">
+      <div class="fld"><label>모델</label><select id="c-m"></select></div>
+      <div class="two">
+        <div class="fld"><label>등급 A</label><select id="c-a"></select></div>
+        <div class="fld"><label>등급 B</label><select id="c-b"></select></div>
+      </div>
+      <div class="out" id="c-out"></div>
+    </div>
+    <div class="pane" id="pane1">
+      <div class="two">
+        <div class="fld"><label>모델</label><select id="s-m"></select></div>
+        <div class="fld"><label>등급</label><select id="s-g"></select></div>
+      </div>
+      <div class="fld"><label>멘트 유형</label>
+        <div class="segs">
+          <button class="seg on" data-k="basic">🗣 기본 안내</button>
+          <button class="seg" data-k="cmp">⚖️ 등급 추천</button>
+          <button class="seg" data-k="obj">🛡 반론 대응</button>
+        </div>
+      </div>
+      <div class="script" id="s-out"></div>
+      <div class="acts">
+        <button class="pbtn" id="s-copy">📋 멘트 복사</button>
+        <button class="pbtn g" id="s-short">간단히 / 자세히</button>
+      </div>
+      <div class="disc">💡 서비스 <b>내용</b>은 원본 데이터 기준이고, <b>표현</b>은 화법 예시입니다. 매장 상황에 맞게 다듬어 쓰세요.</div>
+    </div>
+    <div class="pane" id="pane2">
+      <div class="score" id="q-score">맞힘 0 / 푼 문제 0</div>
+      <div id="q-res"></div>
+      <div class="qz" id="q-text"></div>
+      <div id="q-opts"></div>
+      <div class="acts"><button class="pbtn" id="q-next">다음 문제 →</button></div>
+    </div>
+  </div>
+</div>
+
+<div id="fairy">
+  <div id="bubble"><span class="nm">케어핑</span><span id="btext"></span></div>
+  <button id="fbtn" title="케어핑에게 물어보기">
+    <span class="ping"></span>
+    <svg viewBox="0 0 100 112" aria-hidden="true">
+      <defs>
+        <linearGradient id="gBody" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#a5d8ff"/><stop offset="1" stop-color="#6aa8f0"/>
+        </linearGradient>
+        <linearGradient id="gOr" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffc48a"/><stop offset="1" stop-color="#ff7a1a"/>
+        </linearGradient>
+      </defs>
+      <g class="fl">
+        <!-- 날개 -->
+        <g class="wing"><ellipse class="wingp" cx="24" cy="52" rx="19" ry="27" transform="rotate(-18 24 52)"/></g>
+        <g class="wing r"><ellipse class="wingp" cx="76" cy="52" rx="19" ry="27" transform="rotate(18 76 52)"/></g>
+        <!-- 요술봉 -->
+        <line class="wand" x1="74" y1="88" x2="88" y2="66" stroke-width="3.4" stroke-linecap="round"/>
+        <path class="star spk" d="M88 58 l2.6 5.4 5.9.8 -4.3 4.1 1 5.9 -5.2-2.8 -5.2 2.8 1-5.9 -4.3-4.1 5.9-.8z"/>
+        <!-- 몸통 -->
+        <ellipse class="body" cx="50" cy="60" rx="27" ry="29"/>
+        <!-- 모자 -->
+        <path class="hat" d="M50 16 C60 24 68 30 70 34 C63 37 56 38 50 38 C44 38 37 37 30 34 C32 30 40 24 50 16 Z"/>
+        <circle class="star spk2" cx="50" cy="13" r="4.6"/>
+        <!-- 얼굴 -->
+        <g class="eye"><ellipse cx="41" cy="57" rx="3.5" ry="4.6" fill="#2b3a4d"/><circle cx="42.2" cy="55.4" r="1.25" fill="#fff"/></g>
+        <g class="eye"><ellipse cx="59" cy="57" rx="3.5" ry="4.6" fill="#2b3a4d"/><circle cx="60.2" cy="55.4" r="1.25" fill="#fff"/></g>
+        <ellipse class="cheek" cx="34" cy="65" rx="4.6" ry="3.2" opacity=".75"/>
+        <ellipse class="cheek" cx="66" cy="65" rx="4.6" ry="3.2" opacity=".75"/>
+        <path d="M45 66 Q50 71.5 55 66" stroke="#2b3a4d" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <!-- 반짝임 -->
+        <circle class="star spk3" cx="16" cy="28" r="3"/>
+        <circle class="star spk2" cx="86" cy="96" r="2.6"/>
+        <circle class="star spk" cx="12" cy="86" r="2.2"/>
+      </g>
+    </svg>
+  </button>
+</div>
+
+<script>
+const ROWS=["방문관리","자가관리","필터·소모품","살균·클리닝","성능 점검","무상 서비스"];
+const PAL=[["#1f6feb","#eef4ff"],["#0f9d76","#e9f8f3"],["#b3761a","#fdf5e7"]];
+
+const DATA=[
+ { n:"①",name:"세탁기",sub:"트롬",icon:"🧺",grades:["프리미엄","라이트플러스","라이트"],
+   rows:{
+    "방문관리":["24개월마다, 총 3회","6개월마다, 총 12회","6개월마다, 총 12회"],
+    "자가관리":["-","-","-"],
+    "필터·소모품":["배수 필터 교체 (48개월차, 1회)|고무패킹 교체 (48개월차, 1회)","배수 필터 교체 (24개월차, 1회)","배수 필터 교체 (24개월차, 1회)"],
+    "살균·클리닝":["배수필터 세척|세제함·스팀노즐·도어 세척","배수필터 세척|세제함·스팀노즐·도어 세척","배수필터 세척|세제함·스팀노즐·도어 세척"],
+    "성능 점검":["성능/작동 점검","성능/작동 점검","성능/작동 점검"],
+    "무상 서비스":["A/S","A/S","A/S"]}},
+ { n:"②",name:"냉장고",sub:"STEM 얼음정수",icon:"🧊",grades:["프리미엄","라이트","기본"],
+   rows:{
+    "방문관리":["3개월마다, 총 24회","3개월마다, 총 24회","3개월마다, 총 24회"],
+    "자가관리":["-","-","-"],
+    "필터·소모품":["워터 필터 교체 (3개월마다)|퓨어프레시 필터 교체 (12개월마다)","워터 필터 교체 (3개월마다)|퓨어프레시 필터 교체 (12개월마다)","워터 필터 교체 (3개월마다)"],
+    "살균·클리닝":["유로 고온살균|얼음저장통 세척|고무패킹 케어","유로 고온살균|얼음저장통 세척|고무패킹 케어","고온·고압 살균|얼음저장통 세척|고무패킹 케어"],
+    "성능 점검":["성능 점검","-","성능 점검"],
+    "무상 서비스":["철거·재설치 (계약기간 내 1회)|A/S","철거·재설치 (계약기간 내 1회)|A/S","철거·재설치 (계약기간 내 1회)|A/S"]}},
+ { n:"③",name:"정수기",sub:"방문 주기별 3종",icon:"💧",grades:["스탠드형","6개월형","12개월형"],
+   rows:{
+    "방문관리":["3개월마다, 총 24회","6개월마다, 총 12회","12개월마다, 총 6회"],
+    "자가관리":["6개월마다 필터","6개월마다 필터","6개월마다 필터"],
+    "필터·소모품":["정수 필터 교체 (주기는 제품별 상이)","정수 필터 교체","정수 필터 교체"],
+    "살균·클리닝":["직수관·출수구 고온/고압 살균|물받이·필터연결부 세척","직수관·출수구 고온/고압 살균|물받이·필터연결부 세척","직수관·출수구 고온/고압 살균|물받이·필터연결부 세척"],
+    "성능 점검":["누수 점검|수질검사 (요청 시)","누수 점검|수질검사 (요청 시)","누수 점검|수질검사 (요청 시)"],
+    "무상 서비스":["A/S","A/S","A/S"]}},
+ { n:"④",name:"공기청정기",sub:"",icon:"🌬️",grades:["프리미엄","라이트플러스"],
+   rows:{
+    "방문관리":["3개월마다, 총 24회|6개월마다, 총 12회","3개월마다, 총 24회|6개월마다, 총 12회"],
+    "자가관리":["12개월마다 필터","12개월마다 필터"],
+    "필터·소모품":["복합필터 교체 (12개월마다, 총 6회)|극세필터 교체","복합필터 교체 (12개월마다, 총 6회)|극세필터 교체"],
+    "살균·클리닝":["클린부스터 분해세척","클린부스터 분해세척"],
+    "성능 점검":["공기질 센서 점검|성능/작동 점검","공기질 센서 점검|성능/작동 점검"],
+    "무상 서비스":["A/S","A/S"]}},
+ { n:"⑤",name:"에어컨",sub:"",icon:"❄️",grades:["프리미엄","라이트플러스"],
+   rows:{
+    "방문관리":["12개월마다, 총 6회","12개월마다, 총 6회"],
+    "자가관리":["-","-"],
+    "필터·소모품":["공기청정필터 교체 (대상 모델, 12개월차 1회)","공기청정필터 교체 (대상 모델, 12개월차 1회)"],
+    "살균·클리닝":["필터 세척","필터 세척"],
+    "성능 점검":["설치환경·냉방·배수 성능 및 작동 점검","설치환경·냉방·배수 성능 및 작동 점검"],
+    "무상 서비스":["철거·재설치 (계약기간 내 1회)|A/S (냉매충전 무상)","철거·재설치 (계약기간 내 1회)|A/S (냉매충전 무상)"]}},
+ { n:"⑥",name:"스타일러",sub:"3벌",icon:"👔",grades:["프리미엄","라이트","베이직"],
+   rows:{
+    "방문관리":["12개월마다, 총 6회","12개월마다, 총 6회","-"],
+    "자가관리":["-","-","12개월마다, 총 6회"],
+    "필터·소모품":["급/배수통 교체 (36개월차, 1회)|향기시트 제공","-","급/배수통 배송 (36개월차, 1회)|향기시트 배송 (12개월마다, 총 6회)"],
+    "살균·클리닝":["급/배수통 및 기계실 입구 클리닝","내부 및 도어 세정","-"],
+    "성능 점검":["성능/작동 점검","성능/작동 점검","-"],
+    "무상 서비스":["A/S","A/S","A/S"]}}
+];
+
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const isNone=v=>!v||v==="-";
+const flat=v=>isNone(v)?"해당 없음":v.split("|").join(" · ");
+const listH=v=>{if(isNone(v))return"해당 없음";const p=v.split("|");
+  return p.length===1?esc(p[0]):"<ul>"+p.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul>";};
+const diffRows=d=>ROWS.filter(r=>new Set(d.rows[r]).size>1);
+const totalGrades=DATA.reduce((a,d)=>a+d.grades.length,0);
+const totalDiff=DATA.reduce((a,d)=>a+diffRows(d).length,0);
+
+/* ================= build views ================= */
+let html="";
+
+/* --- overview --- */
+html+='<div class="view on" id="v-ov">'
+ +'<div class="vh"><h2>전체 한눈에 보기</h2></div>'
+ +'<div class="vsub">6개 모델 · '+totalGrades+'개 등급의 케어 서비스 전 항목입니다. 노란 칸은 같은 모델 내 등급 간 내용이 다른 항목입니다.</div>'
+ +'<div class="kpis">'
+   +'<div class="kpi"><div class="n">'+DATA.length+'</div><div class="l">대상 모델</div></div>'
+   +'<div class="kpi"><div class="n">'+totalGrades+'</div><div class="l">전체 등급</div></div>'
+   +'<div class="kpi"><div class="n">'+ROWS.length+'</div><div class="l">비교 항목</div></div>'
+   +'<div class="kpi"><div class="n">'+totalDiff+'</div><div class="l">등급 차이 발생 항목</div></div>'
+ +'</div>'
+ +'<div class="tcard"><div class="cap"><span class="ct">전체 케어 서비스 매트릭스</span>'
+   +'<span class="lg"><span><i class="w"></i>등급 간 차이</span><span><i class="s"></i>전 등급 동일</span></span></div>'
+ +'<table><colgroup><col style="width:118px"><col style="width:96px"><col style="width:13%"><col style="width:10%"><col style="width:20%"><col style="width:19%"><col style="width:14%"><col style="width:16%"></colgroup>'
+ +'<thead><tr><th>모델</th><th>등급</th>'+ROWS.map(r=>'<th>'+r+'</th>').join("")+'</tr></thead><tbody>';
+
+DATA.forEach((d,i)=>{
+  const dn=diffRows(d);
+  d.grades.forEach((gn,j)=>{
+    const kw=(d.name+" "+d.sub+" "+gn+" "+ROWS.map(r=>flat(d.rows[r][j])).join(" ")).toLowerCase();
+    html+='<tr class="'+(j===0?'mstart':'')+'" data-kw="'+esc(kw)+'" data-m="'+i+'" data-diff="'+(dn.length?1:0)+'">';
+    if(j===0) html+='<td class="model" rowspan="'+d.grades.length+'"><span class="em">'+d.icon+'</span>'+d.name
+      +(d.sub?'<span class="sm">'+d.sub+'</span>':'')+'</td>';
+    html+='<td class="grade"><span class="bar" style="background:'+PAL[j][0]+'"></span>'+gn+'</td>';
+    ROWS.forEach(r=>{
+      const v=d.rows[r][j], isD=dn.includes(r);
+      html+='<td class="'+(isD?'d ':'')+(isNone(v)?'none':'')+'" data-row="'+r+'">'+esc(flat(v))+'</td>';
+    });
+    html+='</tr>';
+  });
+});
+html+='</tbody></table><div class="empty" id="ov-empty" style="display:none">검색 결과가 없습니다.</div></div></div>';
+
+/* --- model views --- */
+DATA.forEach((d,i)=>{
+  const dn=diffRows(d);
+  let sum='';
+  if(dn.length){
+    sum='<ul>'+dn.map(r=>{
+      const txt=d.grades.map((gn,j)=>'<b>'+esc(gn)+'</b> '+esc(flat(d.rows[r][j]))).join(' / ');
+      return '<li><b>'+esc(r)+'</b> — '+txt+'</li>';
+    }).join("")+'</ul>';
+  }else{
+    sum='<div class="allsame">이 모델은 <b>모든 등급의 서비스 내용이 동일</b>합니다. 등급에 따른 서비스 차이가 없습니다.</div>';
+  }
+
+  const th='<tr><th style="width:132px">항목</th>'
+    +d.grades.map((gn,j)=>'<th class="g" style="--gc:'+PAL[j][0]+'">'+gn
+      +'<span class="gsub">'+esc(flat(d.rows["방문관리"][j]))+'</span></th>').join("")+'</tr>';
+  const tb=ROWS.map(r=>{
+    const isD=dn.includes(r);
+    const kw=(r+" "+d.grades.map((g,j)=>g+" "+flat(d.rows[r][j])).join(" ")).toLowerCase();
+    return '<tr class="'+(isD?'diff':'same')+'" data-diff="'+(isD?1:0)+'" data-kw="'+esc(kw)+'">'
+      +'<th>'+r+'<span class="tag '+(isD?'d">등급 차이':'s">전 등급 동일')+'</span></th>'
+      +d.rows[r].map(v=>'<td class="'+(isNone(v)?'none':'')+'">'+listH(v)+'</td>').join("")+'</tr>';
+  }).join("");
+
+  html+='<div class="view" id="v-'+i+'">'
+    +'<div class="vh"><span class="num">'+d.n+'</span><h2>'+d.name+'</h2></div>'
+    +'<div class="vsub">'+(d.sub?d.sub+' · ':'')+'등급 '+d.grades.length+'종 · 비교 항목 '+ROWS.length+'개 중 <b>'+dn.length+'개 항목에서 등급 차이</b></div>'
+    +'<div class="summary"><div class="st">핵심 차이 요약</div>'+sum+'</div>'
+    +'<div class="cmp"><table><thead>'+th+'</thead><tbody>'+tb+'</tbody></table>'
+    +'<div class="empty" id="e-'+i+'" style="display:none">조건에 맞는 항목이 없습니다.</div></div></div>';
+});
+document.getElementById("scroll").innerHTML=html;
+
+/* ================= nav ================= */
+document.getElementById("nav1").innerHTML=
+  '<button class="nv on" data-v="ov"><span class="ic">▦</span>전체 한눈에 보기<span class="kb">0</span></button>';
+document.getElementById("nav2").innerHTML=DATA.map((d,i)=>
+  '<button class="nv" data-v="'+i+'"><span class="ic">'+d.icon+'</span>'+d.name+'<span class="kb">'+(i+1)+'</span></button>').join("");
+
+const TITLES={ov:["전체 한눈에 보기",DATA.length+"개 모델 · "+totalGrades+"개 등급"]};
+DATA.forEach((d,i)=>TITLES[i]=[d.name+(d.sub?" ("+d.sub+")":""),"등급 "+d.grades.length+"종 · 차이 항목 "+diffRows(d).length+"개"]);
+
+let cur="ov";
+function show(v){
+  cur=String(v);
+  document.querySelectorAll(".nv").forEach(b=>b.classList.toggle("on",b.dataset.v===cur));
+  document.querySelectorAll(".view").forEach(x=>x.classList.remove("on"));
+  document.getElementById("v-"+cur).classList.add("on");
+  document.getElementById("ttl").textContent=TITLES[cur][0];
+  document.getElementById("tsub").textContent=TITLES[cur][1];
+  document.getElementById("scroll").scrollTop=0;
+  apply();
+}
+document.querySelector("aside").addEventListener("click",e=>{const b=e.target.closest(".nv");if(b)show(b.dataset.v);});
+document.getElementById("scroll").addEventListener("click",e=>{
+  const c=e.target.closest("td.model");if(c)show(c.closest("tr").dataset.m);
+});
+
+/* ================= filter ================= */
+const q=document.getElementById("q"), difBtn=document.getElementById("dif");
+let onlyDiff=false;
+
+function mark(el,term){
+  el.querySelectorAll("mark").forEach(m=>m.replaceWith(document.createTextNode(m.textContent)));
+  el.normalize();
+  if(!term)return;
+  const walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
+  const hits=[];let n;
+  while(n=walk.nextNode()){ if(n.nodeValue.toLowerCase().includes(term)) hits.push(n); }
+  hits.forEach(node=>{
+    const t=node.nodeValue, low=t.toLowerCase(), frag=document.createDocumentFragment();
+    let i=0,k;
+    while((k=low.indexOf(term,i))>-1){
+      frag.appendChild(document.createTextNode(t.slice(i,k)));
+      const m=document.createElement("mark");m.textContent=t.slice(k,k+term.length);frag.appendChild(m);
+      i=k+term.length;
+    }
+    frag.appendChild(document.createTextNode(t.slice(i)));
+    node.replaceWith(frag);
+  });
+}
+
+function apply(){
+  const term=q.value.trim().toLowerCase();
+  const view=document.getElementById("v-"+cur);
+  let shown=0;
+  view.querySelectorAll("tbody tr").forEach(tr=>{
+    const okQ=!term||(tr.dataset.kw||"").includes(term);
+    const okD=!onlyDiff||tr.dataset.diff==="1";
+    const vis=okQ&&okD;
+    tr.classList.toggle("hide",!vis);
+    if(vis)shown++;
+  });
+  mark(view.querySelector("tbody"),term);
+  const emp=view.querySelector(".empty");
+  if(emp)emp.style.display=shown?"none":"block";
+}
+q.addEventListener("input",apply);
+difBtn.addEventListener("click",()=>{onlyDiff=!onlyDiff;difBtn.classList.toggle("on",onlyDiff);apply();});
+document.getElementById("prt").addEventListener("click",()=>window.print());
+
+/* ================= shortcuts ================= */
+document.addEventListener("keydown",e=>{
+  if(e.key==="/"&&document.activeElement!==q){e.preventDefault();q.focus();q.select();return;}
+  if(e.key==="Escape"){q.value="";q.blur();apply();return;}
+  if(document.activeElement===q)return;
+  if(e.key==="0"){show("ov");return;}
+  const n=parseInt(e.key,10);
+  if(n>=1&&n<=DATA.length){show(n-1);return;}
+  if(e.key==="d"||e.key==="D"){difBtn.click();return;}
+  if(e.key==="ArrowRight"||e.key==="ArrowLeft"){
+    const order=["ov"].concat(DATA.map((_,i)=>String(i)));
+    let idx=order.indexOf(cur)+(e.key==="ArrowRight"?1:-1);
+    if(idx<0)idx=order.length-1; if(idx>=order.length)idx=0;
+    show(order[idx]);
+  }
+  if(e.key==="f"||e.key==="F"){togglePanel();return;}
+});
+
+/* ================================================================
+   케어 요정 「케어핑」
+   ================================================================ */
+const $=id=>document.getElementById(id);
+const bubble=$("bubble"), btext=$("btext"), panel=$("panel");
+let bTimer=null;
+
+function say(html,ms){
+  btext.innerHTML=html; bubble.classList.add("on");
+  clearTimeout(bTimer);
+  if(ms!==0) bTimer=setTimeout(()=>bubble.classList.remove("on"), ms||6000);
+}
+function opts(sel,arr,keep){
+  const prev=sel.value;
+  sel.innerHTML=arr.map((t,i)=>'<option value="'+i+'">'+esc(t)+'</option>').join("");
+  if(keep&&prev!==""&&+prev<arr.length) sel.value=prev;
+}
+
+/* ---------- 패널 열고 닫기 ---------- */
+function togglePanel(force){
+  const on=force!==undefined?force:!panel.classList.contains("on");
+  panel.classList.toggle("on",on);
+  if(on){ bubble.classList.remove("on"); syncToView(); }
+}
+$("fbtn").addEventListener("click",()=>togglePanel());
+$("pclose").addEventListener("click",()=>togglePanel(false));
+$("fbtn").addEventListener("mouseenter",()=>{ if(!panel.classList.contains("on")) say(TIPS[cur]||"무엇이든 물어보세요!",5000); });
+
+document.querySelector(".pt-tabs").addEventListener("click",e=>{
+  const b=e.target.closest(".pt-tab"); if(!b)return;
+  document.querySelectorAll(".pt-tab").forEach(t=>t.classList.toggle("on",t===b));
+  document.querySelectorAll(".pane").forEach((p,i)=>p.classList.toggle("on",i===+b.dataset.pane));
+  if(+b.dataset.pane===2&&!$("q-text").innerHTML) newQuiz();
+});
+
+/* ---------- 기능 1 : 등급 비교 ---------- */
+const cM=$("c-m"),cA=$("c-a"),cB=$("c-b"),cOut=$("c-out");
+opts(cM,DATA.map(d=>d.name+(d.sub?" ("+d.sub+")":"")));
+function cmpGrades(){
+  const d=DATA[+cM.value], a=+cA.value, b=+cB.value;
+  if(a===b){ cOut.innerHTML='<div class="same">같은 등급이에요. 서로 다른 등급 두 개를 골라 주세요 🙂</div>'; return; }
+  const rows=ROWS.filter(r=>d.rows[r][a]!==d.rows[r][b]);
+  if(!rows.length){
+    cOut.innerHTML='<div class="same"><b>'+esc(d.grades[a])+'</b> 와 <b>'+esc(d.grades[b])
+      +'</b> 는 6개 항목이 <b>모두 동일</b>합니다. 서비스 차이가 없다고 안내하시면 돼요!</div>';
+    return;
+  }
+  cOut.innerHTML='<div class="hd">차이나는 항목 '+rows.length+'개</div>'
+   +rows.map(r=>'<div class="dl"><div class="k">'+esc(r)+'</div>'
+      +'<div class="r"><span class="t" style="background:'+PAL[a][0]+'">'+esc(d.grades[a])+'</span><span>'+esc(flat(d.rows[r][a]))+'</span></div>'
+      +'<div class="r"><span class="t" style="background:'+PAL[b][0]+'">'+esc(d.grades[b])+'</span><span>'+esc(flat(d.rows[r][b]))+'</span></div></div>').join("");
+}
+function refreshCmp(){
+  const d=DATA[+cM.value];
+  opts(cA,d.grades); opts(cB,d.grades);
+  cA.value=0; cB.value=Math.min(1,d.grades.length-1);
+  cmpGrades();
+}
+cM.addEventListener("change",refreshCmp);
+cA.addEventListener("change",cmpGrades);
+cB.addEventListener("change",cmpGrades);
+refreshCmp();
+
+/* ================================================================
+   기능 2 : 고객 응대 멘트 (실생활 화법)
+   ---------------------------------------------------------------
+   WHY  : 데이터에 실제로 등장하는 용어에만 실생활 설명을 붙인다.
+          (없는 사실을 지어내지 않기 위해 키워드 매칭 방식)
+   ================================================================ */
+const WHY=[
+ ["배수 필터","세탁하고 나온 실밥·먼지가 전부 모이는 곳이에요. 쌓이면 물 빠짐이 느려지고 세탁조에서 쉰 냄새가 올라옵니다."],
+ ["배수필터","세탁물 실밥·먼지가 모이는 곳이라, 여기가 막히면 냄새의 원인이 됩니다."],
+ ["고무패킹","문 안쪽 고무 있잖아요. 물기가 계속 고여서 곰팡이가 제일 잘 생기는 자리예요."],
+ ["세제함","세제가 굳어서 눌어붙는 곳인데, 좁아서 직접 닦기가 은근히 어려우세요."],
+ ["스팀노즐","스팀 나오는 구멍이라 물때가 끼면 스팀이 약해집니다."],
+ ["도어 세척","손이 제일 많이 닿는 부분이라 같이 닦아 드립니다."],
+ ["워터 필터","드시는 물이 직접 지나가는 필터예요. 이건 주기 지키는 게 제일 중요합니다."],
+ ["퓨어프레시","냉장실 냄새를 잡아주는 필터예요. 김치나 생선 자주 보관하시면 확실히 체감되십니다."],
+ ["얼음저장통","얼음이 냉장고 냄새를 그대로 빨아들여요. 통을 씻어야 얼음에서 냄새가 안 납니다."],
+ ["유로 고온살균","물이 지나다니는 관 속까지 살균합니다. 눈에 안 보여서 고객님이 직접은 못 하시는 부분이에요."],
+ ["고온·고압 살균","관 내부를 뜨거운 물로 살균합니다. 손이 안 닿는 곳이라 방문 관리가 꼭 필요한 부분이에요."],
+ ["직수관","물이 지나는 관을 통째로 살균해요. 정수기에서 제일 중요한 위생 포인트입니다."],
+ ["출수구","물 나오는 입구는 컵이나 손이 닿는 자리라 세균이 제일 잘 생깁니다."],
+ ["물받이","물때가 제일 잘 끼는 곳이죠. 닦아도 금방 다시 생기는 부분이라 방문 때 같이 해 드립니다."],
+ ["필터연결부","필터 끼우는 부분인데 물이 새기 쉬워서 같이 확인합니다."],
+ ["누수 점검","정수기 사고는 대부분 물 새는 거예요. 그걸 미리 잡아 드리는 게 방문의 핵심입니다."],
+ ["수질검사","물맛이 이상하다 싶으시면 요청만 주세요. 나오셔서 바로 확인해 드립니다."],
+ ["복합필터","필터가 먼지로 꽉 차면 아무리 오래 틀어도 공기가 안 걸러져요. 1년마다 새것으로 갈아 드립니다."],
+ ["극세필터","머리카락이나 큰 먼지를 1차로 걸러주는 필터입니다."],
+ ["클린부스터","바람을 멀리 보내주는 부분인데, 분해해서 닦아야 해서 직접은 어려우세요."],
+ ["공기질 센서","센서에 먼지가 끼면 공기가 나쁜데도 '좋음'으로 뜰 수 있어요. 그래서 센서 점검이 중요합니다."],
+ ["공기청정필터","에어컨에도 필터가 들어가요. 여름 오기 전에 갈아두시면 바람 냄새가 확실히 다릅니다."],
+ ["필터 세척","에어컨 필터에 먼지 끼면 바람 세기랑 전기요금에 바로 영향이 갑니다."],
+ ["배수 성능","에어컨에서 물 새는 문제, 원인이 대부분 배수예요. 미리 점검해서 막아 드립니다."],
+ ["냉방","여름 오기 전에 시원하게 잘 나오는지 미리 확인해 드립니다."],
+ ["설치환경","벽이나 배관 상태까지 같이 봐 드려요."],
+ ["냉매충전","쓰다 보면 냉방이 약해질 때가 있는데, 냉매 채우는 게 무상이라 부담이 없으세요."],
+ ["철거·재설치","이사하실 때 떼고 다시 달아드리는 걸 계약기간 안에 1회 무상으로 해 드립니다."],
+ ["급/배수통","물 넣고 빼는 통이라 물때가 잘 생기는 부분이에요."],
+ ["향기시트","옷에 은은하게 향 남겨주는 소모품입니다."],
+ ["기계실 입구","안쪽 기계 부분은 고객님이 열기 어려우셔서 방문할 때 같이 관리합니다."],
+ ["내부 및 도어 세정","옷이 닿는 안쪽이랑 문을 닦아 드립니다."],
+ ["A/S","쓰시다 이상 생기면 무상으로 봐 드립니다."]
+];
+function whyOf(text,used){
+  const out=[];
+  WHY.forEach(([k,t])=>{
+    if(text.includes(k)&&!used.has(t)){ used.add(t); out.push(t); }
+  });
+  return out;
+}
+/* 한글 조사 자동 선택 (받침 유무) */
+function hasJong(w){
+  if(!w)return false;
+  const c=w.charCodeAt(w.length-1);
+  return c>=0xAC00&&c<=0xD7A3 ? ((c-0xAC00)%28)!==0 : false;
+}
+const eun=w=>hasJong(w)?"은":"는";
+const iga=w=>hasJong(w)?"이":"가";
+
+/* 방문 주기 → 실생활 표현 */
+const CYCLE={3:"계절 바뀔 때마다 (1년에 네 번)",6:"봄·가을 두 번 (1년에 두 번)",12:"1년에 한 번",24:"2년에 한 번",36:"3년에 한 번",48:"4년에 한 번"};
+function period(v){
+  if(isNone(v)) return null;
+  const m=v.match(/(\d+)개월마다/), c=v.match(/총\s*(\d+)회/);
+  if(!m) return {raw:v,life:null,cnt:c?+c[1]:0};
+  const mo=+m[1];
+  return {raw:v,mo:mo,cnt:c?+c[1]:0,life:CYCLE[mo]||(mo+"개월에 한 번")};
+}
+function visitCount(d,j){ const p=period(d.rows["방문관리"][j]); return p?p.cnt:0; }
+function itemCount(d,j){ return ROWS.reduce((a,r)=>a+(isNone(d.rows[r][j])?0:d.rows[r][j].split("|").length),0); }
+
+const sM=$("s-m"),sG=$("s-g"),sOut=$("s-out");
+opts(sM,DATA.map(d=>d.name+(d.sub?" ("+d.sub+")":"")));
+let longMode=true, sKind="basic";
+
+/* ---------- 유형 1 : 기본 안내 ---------- */
+function scBasic(d,j){
+  const gn=d.grades[j], used=new Set();
+  let t='[ '+d.name+' · '+gn+' — 고객 안내 멘트 ]\n\n';
+
+  t+='■ 이렇게 시작하세요\n';
+  t+='"고객님, '+d.name+'는 사고 나서 끝이 아니라 눈에 안 보이는 안쪽이 관리 포인트예요.\n';
+  t+=' '+gn+' 케어십은 그걸 저희 매니저가 대신 챙겨드리는 서비스입니다."\n\n';
+
+  const pv=period(d.rows["방문관리"][j]);
+  t+='■ 얼마나 자주 오나요?\n';
+  if(pv&&pv.life){
+    t+='"'+pv.life+' 방문드리고, 6년 약정 기준으로 총 '+pv.cnt+'번 찾아뵙습니다."\n';
+  }else if(pv){
+    t+='"'+pv.raw+' 방문드립니다."\n';
+  }else{
+    t+='"이 등급은 매니저 방문 없이 고객님이 직접 관리하시는 구성입니다."\n';
+  }
+  const sf=d.rows["자가관리"][j];
+  if(!isNone(sf)) t+='"'+flat(sf)+'는 고객님께서 직접 교체하시면 되고, 필요한 건 저희가 미리 보내드립니다."\n';
+  t+='\n';
+
+  t+='■ 무엇을 해드리나요? (실제로 이런 게 달라져요)\n';
+  ["필터·소모품","살균·클리닝","성능 점검"].forEach(r=>{
+    const v=d.rows[r][j]; if(isNone(v))return;
+    v.split("|").forEach(one=>{
+      t+='· '+one+'\n';
+      if(longMode) whyOf(one,used).forEach(w=>t+='   → "'+w+'"\n');
+    });
+  });
+  t+='\n';
+
+  const fs=d.rows["무상 서비스"][j];
+  if(!isNone(fs)){
+    t+='■ 추가 비용 없이 되는 것\n';
+    fs.split("|").forEach(one=>{
+      t+='· '+one+'\n';
+      if(longMode) whyOf(one,used).forEach(w=>t+='   → "'+w+'"\n');
+    });
+    t+='\n';
+  }
+
+  t+='■ 마무리 멘트\n';
+  t+='"직접 하시려면 부품 사서 뜯고 닦고 하셔야 하는데,\n';
+  t+=' 그걸 정해진 주기에 저희가 알아서 챙겨드린다고 보시면 됩니다."\n\n';
+  t+='※ 계약 조건과 모델에 따라 일부 다를 수 있습니다.';
+  return t;
+}
+
+/* ---------- 유형 2 : 등급 추천 비교 ---------- */
+function scCompare(d,j){
+  const gn=d.grades[j];
+  let t='[ '+d.name+' · '+gn+' 기준 등급 비교 화법 ]\n\n';
+  if(d.grades.length<2){ return t+'이 제품은 단일 등급입니다.'; }
+
+  const others=d.grades.map((_,k)=>k).filter(k=>k!==j);
+  others.forEach(k=>{
+    const rows=ROWS.filter(r=>d.rows[r][j]!==d.rows[r][k]);
+    t+='── '+gn+'  vs  '+d.grades[k]+' ──\n';
+    if(!rows.length){
+      t+='"두 등급은 서비스 내용이 완전히 같습니다. 관리 범위로는 차이가 없다고 보시면 돼요."\n\n';
+      return;
+    }
+    t+='"차이는 딱 '+rows.length+'가지입니다."\n';
+    rows.forEach(r=>{
+      const a=d.rows[r][j], b=d.rows[r][k];
+      t+='\n▸ '+r+'\n';
+      t+='   '+gn+' : '+flat(a)+'\n';
+      t+='   '+d.grades[k]+' : '+flat(b)+'\n';
+      if(longMode&&r==="방문관리"){
+        const pa=period(a), pb=period(b);
+        if(pa&&pb&&pa.life&&pb.life)
+          t+='   → "'+gn+eun(gn)+' '+pa.life+', '+d.grades[k]+eun(d.grades[k])+' '+pb.life+' 오는 차이예요."\n';
+        else if(pa&&!pb)
+          t+='   → "'+d.grades[k]+eun(d.grades[k])+' 매니저 방문이 없는 구성입니다."\n';
+      }
+      if(longMode&&r!=="방문관리"){
+        const only=(a||"").split("|").filter(x=>!(b||"").includes(x));
+        if(only.length&&!isNone(a))
+          t+='   → "'+gn+'에만 들어가는 건 '+only.join(", ")+' 입니다."\n';
+        else if(isNone(a)&&!isNone(b))
+          t+='   → "이 항목은 '+d.grades[k]+'에만 있습니다."\n';
+      }
+    });
+    t+='\n\n';
+  });
+
+  if(longMode){
+    const vc=d.grades.map((_,k)=>visitCount(d,k)), ic=d.grades.map((_,k)=>itemCount(d,k));
+    const pickAll=(arr,val)=>arr.map((v,k)=>v===val?d.grades[k]:null).filter(Boolean);
+    const vMax=Math.max(...vc), vMin=Math.min(...vc), iMax=Math.max(...ic), iMin=Math.min(...ic);
+    t+='■ 이런 고객님께 권해보세요 (참고용)\n';
+    if(vMax>vMin){
+      const w=pickAll(vc,vMax);
+      t+='· 방문이 가장 잦은 건 「'+w.join("·")+'」('+vMax+'회) — 바빠서 신경 못 쓰시거나, 아이·반려동물 있는 집에 권하기 좋습니다.\n';
+    }
+    if(iMax>iMin){
+      const rich=pickAll(ic,iMax), lean=pickAll(ic,iMin);
+      t+='· 관리 항목이 가장 많은 건 「'+rich.join("·")+'」 — 오래 쓰실 계획이고 부품까지 챙기고 싶은 분께 맞습니다.\n';
+      t+='· 「'+lean.join("·")+'」'+eun(lean[lean.length-1])+' 구성이 가장 가벼워서, 직접 관리 가능하고 비용을 줄이고 싶은 분께 안내하세요.\n';
+    }
+    if(vMax===vMin&&iMax===iMin)
+      t+='· 등급 간 서비스 차이가 없으므로, 가격 조건만 비교해 안내하시면 됩니다.\n';
+  }
+  return t.trim();
+}
+
+/* ---------- 유형 3 : 고객 반론 대응 ---------- */
+function scObjection(d,j){
+  const gn=d.grades[j], dn=diffRows(d), used=new Set();
+  let t='[ '+d.name+' · '+gn+' — 자주 나오는 질문 대응 ]\n\n';
+
+  const hard=[];
+  ["살균·클리닝","성능 점검"].forEach(r=>{
+    const v=d.rows[r][j]; if(!isNone(v)) hard.push(...v.split("|"));
+  });
+  const self=d.rows["자가관리"][j];
+
+  t+='Q1. "그거 제가 직접 하면 안 되나요?"\n';
+  if(!isNone(self)) t+='A. "'+flat(self)+'는 실제로 직접 하시는 게 맞아요. 다만 ';
+  else t+='A. "';
+  t+=(hard.length? hard.slice(0,3).join(", ")+' 같은 건 분해하거나 손이 안 닿는 안쪽이라, 이건 매니저가 장비 들고 와서 합니다."\n'
+              : '기계 안쪽은 분해가 필요해서 매니저가 직접 처리합니다."\n');
+  if(longMode&&hard.length) whyOf(hard[0],used).forEach(w=>t+='   덧붙임 → "'+w+'"\n');
+  t+='\n';
+
+  const pv=period(d.rows["방문관리"][j]);
+  t+='Q2. "방문 주기는 어떻게 되나요? 제가 챙겨야 해요?"\n';
+  if(pv&&pv.life) t+='A. "'+pv.life+' 저희가 먼저 연락드리고 방문합니다. 고객님이 날짜 기억하실 필요 없어요. 6년 동안 총 '+pv.cnt+'번입니다."\n\n';
+  else if(pv) t+='A. "'+pv.raw+' 방문드립니다. 일정은 저희가 먼저 안내드립니다."\n\n';
+  else t+='A. "이 등급은 매니저 방문 없이 고객님이 직접 관리하시는 구성이라, 소모품을 주기에 맞춰 보내드립니다."\n\n';
+
+  t+='Q3. "다른 등급이랑 뭐가 달라요? 굳이 이걸로?"\n';
+  if(!dn.length) t+='A. "사실 이 제품은 등급별 관리 내용이 동일합니다. 서비스로는 차이가 없으니 조건만 보고 고르시면 돼요." (과장 금지)\n\n';
+  else t+='A. "차이나는 건 '+dn.join(", ")+' 이렇게 '+dn.length+'가지예요. 나머지는 등급 상관없이 똑같이 해 드립니다."\n\n';
+
+  const fs=d.rows["무상 서비스"][j]||"";
+  t+='Q4. "이사 가면 어떻게 하나요?"\n';
+  t+=(fs.includes("철거·재설치")
+    ? 'A. "계약기간 안에 1회는 무상으로 떼고 다시 달아드립니다. 이사 일정 잡히시면 미리 연락 주세요."\n\n'
+    : 'A. "이 제품은 철거·재설치 무상 항목이 별도로 없어서, 이사 시 조건은 계약서 기준으로 확인 도와드리겠습니다." (임의 약속 금지)\n\n');
+
+  t+='Q5. "쓰다가 고장나면 돈 또 들어요?"\n';
+  t+=(fs.includes("A/S")? 'A. "A/S는 무상입니다.'+(fs.includes("냉매충전")?' 냉매 충전도 무상이라 냉방 약해지셔도 부담 없으세요.':'')+'"\n\n'
+                        : 'A. "무상 A/S 항목은 계약 조건에 따라 달라서, 계약서 기준으로 확인해 드리겠습니다."\n\n');
+
+  if(longMode){
+    t+='Q6. "지금 당장 급한 건 아닌데요."\n';
+    t+='A. "맞아요, 지금 바로 문제가 생기진 않습니다. 다만 ';
+    t+=(hard.length? '"'+hard[0]+'" 같은 건 한참 지나서 냄새나 성능으로 티가 나거든요. 그때는 이미 안쪽이 상한 뒤라 그전에 주기적으로 관리해두는 개념입니다."\n\n'
+                   : '안쪽 관리는 티가 늦게 나서, 문제가 보일 땐 이미 진행된 뒤인 경우가 많습니다."\n\n');
+  }
+  t+='※ 확실하지 않은 조건은 임의로 답하지 말고 계약서·본사 기준으로 확인 후 안내하세요.';
+  return t;
+}
+
+function buildScript(){
+  const d=DATA[+sM.value], j=+sG.value;
+  sOut.textContent = sKind==="basic"? scBasic(d,j) : sKind==="cmp"? scCompare(d,j) : scObjection(d,j);
+  sOut.scrollTop=0;
+}
+function refreshScript(){ opts(sG,DATA[+sM.value].grades); sG.value=0; buildScript(); }
+sM.addEventListener("change",refreshScript);
+sG.addEventListener("change",buildScript);
+document.querySelector(".segs").addEventListener("click",e=>{
+  const b=e.target.closest(".seg"); if(!b)return;
+  sKind=b.dataset.k;
+  document.querySelectorAll(".seg").forEach(s=>s.classList.toggle("on",s===b));
+  buildScript();
+});
+$("s-short").addEventListener("click",()=>{longMode=!longMode;buildScript();});
+$("s-copy").addEventListener("click",async()=>{
+  const btn=$("s-copy"), t=sOut.textContent;
+  try{ await navigator.clipboard.writeText(t); }
+  catch(err){
+    const ta=document.createElement("textarea");
+    ta.value=t; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy");}catch(e2){}
+    ta.remove();
+  }
+  btn.textContent="✅ 복사 완료!";
+  setTimeout(()=>btn.textContent="📋 멘트 복사",1600);
+});
+refreshScript();
+
+/* ---------- 기능 3 : 교육 퀴즈 ---------- */
+let qAns=-1, qDone=0, qOk=0;
+function pick(a){ return a[Math.floor(Math.random()*a.length)] }
+function newQuiz(){
+  let d,j,r,correct,tries=0;
+  do{
+    d=pick(DATA); j=Math.floor(Math.random()*d.grades.length); r=pick(ROWS);
+    correct=d.rows[r][j]; tries++;
+  }while(isNone(correct)&&tries<40);
+
+  const pool=[];
+  DATA.forEach(dd=>dd.grades.forEach((_,k)=>{
+    const v=dd.rows[r][k];
+    if(!isNone(v)&&v!==correct&&!pool.includes(v)) pool.push(v);
+  }));
+  if(pool.length<3){
+    DATA.forEach(dd=>ROWS.forEach(rr=>dd.grades.forEach((_,k)=>{
+      const v=dd.rows[rr][k];
+      if(!isNone(v)&&v!==correct&&!pool.includes(v)) pool.push(v);
+    })));
+  }
+  const wrong=[];
+  while(wrong.length<3&&pool.length){ wrong.push(pool.splice(Math.floor(Math.random()*pool.length),1)[0]); }
+  const all=[correct].concat(wrong);
+  for(let i=all.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[all[i],all[k]]=[all[k],all[i]];}
+  qAns=all.indexOf(correct);
+
+  $("q-res").innerHTML="";
+  $("q-text").innerHTML='<small>'+esc(d.name)+(d.sub?' ('+esc(d.sub)+')':'')+'</small>「'+esc(d.grades[j])+'」 등급의 <u>'+esc(r)+'</u> 내용은?';
+  $("q-opts").innerHTML=all.map((v,i)=>'<button class="opt" data-i="'+i+'">'+esc(flat(v))+'</button>').join("");
+}
+$("q-opts").addEventListener("click",e=>{
+  const b=e.target.closest(".opt"); if(!b||b.disabled)return;
+  const i=+b.dataset.i, ok=i===qAns;
+  qDone++; if(ok)qOk++;
+  document.querySelectorAll("#q-opts .opt").forEach((o,k)=>{
+    o.disabled=true;
+    if(k===qAns)o.classList.add("ok");
+    else if(k===i)o.classList.add("no");
+  });
+  $("q-res").innerHTML='<div class="qres '+(ok?'o">🎉 정답이에요! 잘 알고 계시네요.':'x">아쉬워요! 초록색이 정답입니다.')+'</div>';
+  $("q-score").textContent="맞힘 "+qOk+" / 푼 문제 "+qDone+"  ("+Math.round(qOk/qDone*100)+"%)";
+});
+$("q-next").addEventListener("click",newQuiz);
+
+/* ---------- 화면 전환 시 요정 힌트 ---------- */
+const TIPS={};
+TIPS.ov="6개 모델 <b>"+totalGrades+"개 등급</b>을 한 표에 담았어요. 노란 칸이 등급 차이가 나는 부분이에요!";
+DATA.forEach((d,i)=>{
+  const dn=diffRows(d);
+  TIPS[i]=dn.length
+    ? "<b>"+d.name+"</b>은 <b>"+dn.join("·")+"</b> 에서 등급 차이가 있어요. 이 부분만 설명하시면 충분해요!"
+    : "<b>"+d.name+"</b>은 등급별 서비스가 <b>모두 동일</b>해요. 차이 없다고 안내하시면 돼요!";
+});
+function syncToView(){
+  if(cur==="ov")return;
+  cM.value=cur; refreshCmp();
+  sM.value=cur; refreshScript();
+}
+const _show=show;
+show=function(v){ _show(v); syncToView(); if(!panel.classList.contains("on")) say(TIPS[cur],5500); };
+
+/* ---------- 주황 커서 링 ---------- */
+const ring=$("ring");
+let rx=0,ry=0,tx=0,ty=0,raf=null;
+document.addEventListener("mousemove",e=>{
+  tx=e.clientX; ty=e.clientY; ring.classList.add("act");
+  const hit=e.target.closest("button,select,input,td.model,tr,.kpi,.nv,a");
+  ring.classList.toggle("big",!!hit);
+  if(!raf)loop();
+});
+document.addEventListener("mouseleave",()=>ring.classList.remove("act"));
+function loop(){
+  rx+=(tx-rx)*.22; ry+=(ty-ry)*.22;
+  ring.style.transform="translate("+rx+"px,"+ry+"px) translate(-50%,-50%)";
+  raf=requestAnimationFrame(loop);
+}
+
+/* ---------- 첫 인사 ---------- */
+setTimeout(()=>say("안녕하세요! 케어 요정 <b>케어핑</b>이에요 🧚<br>저를 누르면 <b>등급 비교</b>, 고객님께 그대로 읽어드릴 수 있는 <b>실전 응대 멘트</b>, <b>교육 퀴즈</b>까지 도와드려요. (단축키 <b>F</b>)",10000),900);
+
+show("ov");
+</script>
+</body>
+</html>
