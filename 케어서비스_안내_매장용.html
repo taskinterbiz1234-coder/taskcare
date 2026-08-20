@@ -1023,8 +1023,8 @@ TIPS.ov="6개 모델 <b>"+totalGrades+"개 등급</b>을 한 표에 담았어요
 DATA.forEach((d,i)=>{
   const dn=diffRows(d);
   TIPS[i]=dn.length
-    ? "<b>"+d.name+"</b>은 <b>"+dn.join("·")+"</b> 에서 등급 차이가 있어요. 이 부분만 설명하시면 충분해요!"
-    : "<b>"+d.name+"</b>은 등급별 서비스가 <b>모두 동일</b>해요. 차이 없다고 안내하시면 돼요!";
+    ? "<b>"+d.name+"</b>"+eun(d.name)+" <b>"+dn.join("·")+"</b> 에서 등급 차이가 있어요. 이 부분만 설명하시면 충분해요!"
+    : "<b>"+d.name+"</b>"+eun(d.name)+" 등급별 서비스가 <b>모두 동일</b>해요. 차이 없다고 안내하시면 돼요!";
 });
 function syncToView(){
   if(cur==="ov")return;
